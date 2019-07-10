@@ -1,0 +1,78 @@
+- Vào thư mục src/DCA
+- Bước 1: Máy Main server tạo một private blockchain mới, và cấp quyền cho các node truy cập vào chain (Ở hệ thống DCA demo chain mới có tên 		là chaindemo và tất cả các node đều có quyền xin gia nhập vào chain). 
+
+	+ Ở máy Main server chạy file install.sh:  
+		Mở terminal, cd đến thư mục DCA/server (nơi chứa file install.sh), chạy dòng lệnh: sh install.sh [ip address của Main server] 
+
+	Màn hình sẽ in ra IP và port mở để các node khác connect vô chain. 
+	Main server sẽ public IP và port này cho các node khác. 
+	
+	+ Chạy file main_server.py nhập IP address và port của Main server để lắng nghe và cấp quyền cho các node:
+		Chạy dòng lệnh: python main_server.py 
+		Nhập IP và port 
+
+
+- Bước 2: Máy Service provider thứ nhất tạo domain và đăng public key lên chain (tên domain này là duy nhất và sau khi đăng lên multichain 		không thể xóa đi được nhưng public key có thể thay đổi.). 
+
+	+ Ở máy Service provider thứ nhất, cd đến thư mục DCA/client/ 
+		Chạy file service_provider_1.py : python service_provider_1.py 
+		Nhập IP và port của Main server 
+
+	+ Chọn tạo domain mới (“1: Sign up.” khi máy mới gia nhập blockchain lần đầu). 
+		Chọn 1 
+		Nhập tên domain (hệ thống sẽ up tên domain lên chain và tự tạo RSA key rồi up lên chain). 
+
+	+ Chọn “2: Sign in.” và nhập tên domain
+
+
+- Bước 3: Máy User đăng request 
+
+	+ Ở máy user cd đến thư mục DCA/client/ 
+		Chạy file user.py  
+		Nhập IP và port của Main server 
+
+	+ Chọn “1: Get a certificate.” 
+		Nhập tên domain của tổ chức bạn muốn lấy service  
+		Nhập thông tin của bạn (ở DCA demo là id user trong database của Service provider thứ nhất) 
+		Sau khi hoàn tất, hệ thống sẽ gửi request đến Service provider thứ nhất. 
+
+
+- Bước 4: Máy Service provider thứ nhất duyệt các yêu cầu cấp service và accept hoặc reject từng yêu cầu. 
+
+	+ Ở máy Service provider thứ nhất cd đến thư mục DCA/client/ 
+		Chạy file service_provider_1.py  
+		Nhập IP và port của Main server 
+
+	+ Chọn “2: Sign in.” 
+		Sau khi login chọn “1: Accept request.”
+		File certificate sẽ được đăng lên storj
+
+
+- Bước 5: Máy User kiểm tra request certificate đã được chấp nhận hay chưa. 
+
+	+ Ở máy User chọn “2: Check if the request is accepted or not.”
+		Nếu request được accept, hệ thống sẽ trả về ID của certificate. 
+		User gửi ID này cho Service provider thứ 2. 
+
+
+- Bước 6: Máy Service provider thứ 2 sau khi nhận ID certificate từ User gửi đến, sẽ tiến hành kiểm tra số vote hiện tại của certificate rồi 		dựa vào đó quyết định có tin cậy hay không. 
+
+	+ Ở máy Service provider thứ 2 cd đến đường dẫn DCA/client 
+		Chạy terminal, gõ lệnh:  python service_provider_2.py  
+		Nhập IP và port của Main server 
+	+ Nhập ID của certificate và xem số vote 
+	+ Chọn y hoặc n nếu đồng ý hoặc không đồng ý tải tập tin chứng chỉ xuống
+
+
+- Bước 7: Máy Voter tiến hành xác thực các certificate và thực hiện vote dựa trên hàm xác thực tham khảo của hệ thổng. 
+
+	+ Chạy terminal, gõ lệnh:  python voter.py  
+		Nhập IP và port của Main server
+
+	+ Nhập ID của certificate muốn vote và tên domain của tổ chức tương ứng
+		Hệ thống sẽ xuất ra kết quả hàm xác thực tham khảo  
+
+	+ Chọn valid hoặc invalid, và chọn số vote muốn vote  
+
+Sau khi vote, máy Service provider thứ hai kiểm tra lại lần nữa như Bước 6
+

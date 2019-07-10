@@ -1,0 +1,76 @@
+Chuẩn bị: 
+
+	- Một máy main server để tạo một private blockchain chung cho mọi node, cho biết mọi node khác biết được địa chỉ IP và port kết nối blockchain của máy. 
+
+	- Máy service provider, máy user, máy voter và máy service provider khác. Các máy này đều biết trước IP và port blockchain đang mở của máy main server và tên blockchain được tạo vởi main server. 
+
+
+Cấu hình tối thiểu yêu cầu:  
+
+	- Linux: 64-bit, hỗ trợ Ubuntu 12.04+, CentOS 6.2+, Debian 7+, Fedora 15+, RHEL 6.2+. 
+
+	- RAM: 512 MB   
+
+	- Không gian ổ đĩa (disk space): 1 GB 
+
+
+Môi trường và phần mềm:  
+
+	- Các máy đã cài đặt thành công multichain, storj và python3 
+		+ Cách cài đặt multichain:
+			Truy cập trang web https://www.multichain.com/download-install/ đến mục Installing MultiChain Community on Linux sẽ có 			hướng dẫn cài trên linux. Cụ thể như sau: 
+
+			B1. Mở terminal nhập : su (nhập mật khẩu của root-user)  
+
+			B2. Nhập cd /tmp đê thay đổi thư mục chứa file cài đặt multichain tạm thời, có thể thay tmp bằng bất kì thư mục nào 
+
+			B3. Tải về file cài đặt :  
+
+				Nhập wget https://www.multichain.com/download/multichain-2.0.2.tar.gz 
+
+			B4. Giải nén: tar -xvzf multichain-2.0.2.tar.gz 
+
+			B5. Duy chuyển file đã giải nén đến thư mục /usr/local/bin để dễ gọi command line sau này bằng cách nhập cd 				multichain-2.0.2, sau đó nhập:  
+
+				mv multichaind multichain-cli multichain-util /usr/local/bin  
+
+			B6. Trở về account user thường exit 
+
+		+ Cách cài đặt Storj:
+			Chuẩn bị:
+				Cài đặt GO phiên bản từ 1.11 trở lên (trong phần hướng dẫn cài đặt go 1.12) 
+    			
+				Link download: https://golang.org/doc/install?download=go1.12.5.linux-amd64.tar.gz (Nếu đã cài đặt phiên bản 					Go thấp hơn 1.11 thì cần phải gỡ và cài đặt lại phiên bản mới hơn.) 
+
+    				Sau khi tải file cài đặt ta mở terminal và thực hiện các bước sau: 
+
+    				cd <đường dẫn của file cài đặt> 
+
+    				sudo tar -C /usr/local -xzf go1.12.5.linux-amd64.tar.gz 
+
+    				export PATH=$PATH:/usr/local/go/bin 
+
+				Cài đặt đặt GitHub phiên bản mới nhất theo đường dẫn: https://git-scm.com/downloads 
+			
+			Cài đặt:
+				Mở terminal và thực hiện lệnh sau: 
+
+    				git clone https://github.com/storj/storj.git storj 
+
+    				cd storj 
+
+    				make install-sim 
+				
+				export PATH=~/go/bin:$PATH 
+
+		+ Cách cài python3:
+			Mở terminal và thực hiện lệnh sau: sudo apt install python3-pip
+
+
+	- Source code DCA, giải nén và đặt trên thư mục  ( có dạng : '~/[tên đường dẫn]/DCA/’). 	
+
+	- Các package python cần thiết:  
+
+		Mở terminal, cd đến thư mục /DCA (nơi chứa file install.sh cài đặt các package), chạy dòng lệnh: sh install.sh  	
+
+	
